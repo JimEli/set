@@ -107,12 +107,6 @@ public:
     iterator end() const { return iterator(nullptr, this); }
     iterator rbegin() const { return iterator(body.rbegin(root), this); }
 
-    void print() 
-    {
-        body.printAll(root, true);
-        std::cout << "\n";
-    }
-
     iterator find(const T& key) const { return iterator(body.find(root, key), this); }
 
     iterator lower_bound(const T& key) const { return iterator(body.lower_bound(root, key), this); }
