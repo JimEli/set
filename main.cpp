@@ -13,9 +13,6 @@ void out(set<T>& s)
     std::cout << std::endl;
 }
 
-// Visual Leak Detector.
-#include "C:\Program Files (x86)\Visual Leak Detector\include\vld.h"
-
 int main()
 {
     set<int> s;
@@ -130,7 +127,7 @@ int main()
 
     std::cout << "All tests passed." << std::endl;
 
-    // 3 sets.
+    // Union, intersection, difference, swap.
     set<int> st1;
     set<int> st2;
 
@@ -153,10 +150,9 @@ int main()
     std::cout << "Difference:\n";
     sr1 = st1 - st2;
     out(st1); out(st2); out(*sr1);
-        
+
     std::cout << "Swap:\n";
-    st1.print();
-    st2.print();
+    out(st1); out(st2);
     st1.swap(st2);
     out(st1); out(st2);
 }
