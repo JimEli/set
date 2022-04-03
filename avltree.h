@@ -87,6 +87,7 @@ int comp(T a, T b)
     return 0;
 }
 
+
 template <class T>
 class AVLTree
 {
@@ -309,33 +310,6 @@ public:
             return nullptr;
         
         return tmp;
-    }
-
-    void outNode(AVLnode<T>* node)
-    {
-        if (node == nullptr) 
-            std::cout << "none";
-        else 
-            std::cout << node->key;
-    }
-
-    void printAll(AVLnode<T>* n, bool verbose)
-    {
-        if (n == nullptr)
-            return;
-
-        printAll(n->left, verbose);
-        std::cout << n->key;
-        /*
-                if (verbose)
-                {
-                    std::cout << "(parent=";
-                    outNode(n->parent);
-                    std::cout << ")";
-                }
-                std::cout << " ";
-        */
-        printAll(n->right, verbose);
     }
 };
 
