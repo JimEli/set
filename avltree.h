@@ -1,7 +1,23 @@
+
+template <class T> 
+struct less { bool operator() (const T& x, const T& y) const { return x < y; } };
+
 template <typename T>
-class AVLnode
+int comp(T a, T b)
 {
-public:
+    if (a < b)
+        return -1;
+
+    if (b < a)
+        return 1;
+    
+    return 0;
+}
+
+
+template <typename T>
+struct AVLnode
+{
     T key;
     int balance = 0, height = 1;
     AVLnode* left = nullptr;
@@ -15,12 +31,6 @@ public:
     {
         delete left;
         delete right;
-    }
-
-    void makeLeaf()
-    {
-        left = nullptr;
-        right = nullptr;
     }
 
     AVLnode* nextNode()
@@ -71,30 +81,9 @@ public:
     }
 };
 
-
-template <class T> 
-struct less { bool operator() (const T& x, const T& y) const { return x < y; } };
-
-template <typename T>
-int comp(T a, T b)
-{
-    if (a < b)
-        return -1;
-
-    if (b < a)
-        return 1;
-    
-    return 0;
-}
-
-
 template <class T>
 class AVLTree
 {
-public:
-    AVLTree(void) { }
-    ~AVLTree(void) { }
-
 private:
     AVLnode<T>* rotateLeft(AVLnode<T>* a)
     {
@@ -183,7 +172,21 @@ private:
         return cur;
     }
 
+    AVLnode<T>* removeMin(AVLnode<T>* cur)
+    {
+        if (cur->left == nullptr)
+            return cur->right;
+
+        cur->left = removeMin(cur->left);
+        cur = rebalance(cur);
+
+        return cur;
+    }
+
 public:
+    AVLTree(void) { }
+    ~AVLTree(void) { }
+
     AVLnode<T>* insertNode(AVLnode<T>* cur, const T& key)
     {
         if (cur == nullptr)
@@ -204,17 +207,6 @@ public:
         return cur;
     }
 
-    AVLnode<T>* removeMin(AVLnode<T>* cur)
-    {
-        if (cur->left == nullptr)
-            return cur->right;
-
-        cur->left = removeMin(cur->left);
-        cur = rebalance(cur);
-        
-        return cur;
-    }
-
     AVLnode<T>* removeNode(AVLnode<T>* cur, const T& key)
     {
         if (cur == nullptr)
@@ -229,7 +221,8 @@ public:
             AVLnode<T>* lchild = cur->left;
             AVLnode<T>* rchild = cur->right;
 
-            cur->makeLeaf();
+            cur->left = nullptr;
+            cur->right = nullptr;
             delete cur;
 
             if (rchild == nullptr) 
@@ -255,14 +248,6 @@ public:
         return cur;
     }
 
-    AVLnode<T>* biggest(AVLnode<T>* cur) const
-    {
-        while (cur->right != nullptr) 
-            cur = cur->right;
-
-        return cur;
-    }
-
     AVLnode<T>* begin(AVLnode<T>* root) const 
     {
         if (root == nullptr) 
@@ -270,16 +255,6 @@ public:
     
         AVLnode<T>* tmp = smallest(root);
         
-        return tmp;
-    }
-
-    AVLnode<T>* rbegin(AVLnode<T>* root) const
-    {
-        if (root == nullptr) 
-            return nullptr;
-
-        AVLnode<T>* tmp = biggest(root);
-
         return tmp;
     }
 
@@ -312,4 +287,3 @@ public:
         return tmp;
     }
 };
-
