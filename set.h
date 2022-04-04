@@ -3,17 +3,17 @@
 
 #include <algorithm>
 #include <iostream>
-#include "avltree.h"
+#include "avl_tree.h"
 
 template <class T>
-class set 
+class set : public AVLTree<T>
 {
     AVLTree<T> body;
     AVLnode<T>* root = nullptr;
     size_t sz = 0;
 
 public:
-    class iterator 
+    class iterator
     {
         AVLnode<T>* node = nullptr;
         const set* owner = nullptr;
@@ -124,8 +124,6 @@ public:
 
     void erase(const T& key) 
     {
-        if (find(key) == end()) 
-            return;
         root = body.removeNode(root, key);
         if (root != nullptr)
             root->parent = nullptr;
@@ -222,5 +220,3 @@ public:
         return d;
     }
 };
-
-#endif
