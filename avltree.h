@@ -282,6 +282,35 @@ public:
         return cur;
     }
 
+    AVLnode<T>* upper_bound(AVLnode<T>* n, const T& key) const
+    {
+        if (n == nullptr)
+            return nullptr;
+
+        auto x = n;
+
+        while (x != nullptr)
+        {
+            if (comp(x->key, key) == 0)
+                break;
+            if (comp(x->key, key) == -1)
+            {
+                if (x->right == nullptr)
+                    return x;
+                else
+                    x = x->right;
+            }
+            else
+            {
+                if (x->left == nullptr)
+                    return x;
+                else
+                    x = x->left;
+            }
+        }
+        return x;
+    }
+
     AVLnode<T>* find(AVLnode<T>* cur, const T& key) const
     {
         AVLnode<T>* tmp = lower_bound(cur, key);
