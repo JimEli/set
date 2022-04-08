@@ -110,6 +110,7 @@ public:
     iterator find(const T& key) const { return iterator(body.find(root, key), this); }
 
     iterator lower_bound(const T& key) const { return iterator(body.lower_bound(root, key), this); }
+    iterator upper_bound(const T& key) const { return iterator(body.upper_bound(root, key), this); }
 
     void insert(const T& key) 
     {
